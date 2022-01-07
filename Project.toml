@@ -1,0 +1,4 @@
+[deps]
+PQPolygonSDK = "a9381516-e38f-4c81-935c-32707fb4df4c"
+Pluto = "c3e4b0f8-55cb-11ea-2926-15256bba5781"
+PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
