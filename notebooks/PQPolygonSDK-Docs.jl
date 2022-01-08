@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.17.3
+# v0.17.4
 
 using Markdown
 using InteractiveUtils
@@ -9,6 +9,7 @@ begin
 
 	# load required external packages -
 	using TOML
+	using Dates
 	using PQPolygonSDK
 	
 	# setup paths -
@@ -17,7 +18,7 @@ begin
 
 	# load the configuration information -
 	# alias the Polygon.io URL -
-    DATASTORE_URL_STRING = "https://api.polygon.io"
+    POLYGON_URL_STRING = "https://api.polygon.io"
 
     # What we have here is the classic good news, bad news situation ...
     # Bad news: We don't check in our Polygon.io API key to GitHub (sorry). 
@@ -49,10 +50,9 @@ Check out the [Polygon.io blog](https://polygon.io/blog/) for the latest updates
 
 In this notebook, we'll discuss how to use the `PQPolygonSDK.jl` package to query the [Polygon.io REST API](https://polygon.io/docs/stocks). In particular, we'll:
 
-* __Example 1__: Download and analyze daily stock price data for an arbitrary ticker symbol and a specified date range
-* __Example 2__: Download and analyze crypto data for an arbitrary ticker and a specified date range
-* __Example 3__: Download and analyze option data for an arbitrary ticker and a specified date range
-* __Example 4__: Download information about a stock ticker e.g., Apple (AAPL) and Microsoft (MSFT)
+* Download and analyze daily stock price data for an arbitrary ticker symbol and a specified date range
+* Download and analyze crypto data for an arbitrary ticker and a specified date range
+* Download information about a stock ticker e.g., Apple (AAPL) and Microsoft (MSFT)
 """
 
 # ╔═╡ 2c357a88-e6da-420f-bb50-0a7bcd824de3
@@ -104,32 +104,113 @@ begin
 	nothing
 end
 
+# ╔═╡ 8ff5ac28-b6e6-42e4-b99d-2f26cda1e9be
+md"""
+### Stock and Cryptocurreny examples
+"""
+
 # ╔═╡ fe7259dc-6d68-4561-b111-7b8eb62bef25
 md"""
-### Example 1: Download daily stock price data for an arbitrary ticker symbol and date range
+##### Download daily stock price data for an arbitrary ticker symbol and date range
 """
+
+# ╔═╡ e4d1c872-5b50-4f7d-aa2e-044c8aef2040
+begin
+
+	# what ticker do we want to download?
+	stock_ticker_symbol = "SPY";
+	
+	# setup the parameters for the call to the endpoint -
+	stock_endpoint_options = Dict{String,Any}()
+	stock_endpoint_options["adjusted"] = true
+	stock_endpoint_options["sortdirection"] = "asc"
+	stock_endpoint_options["limit"] = 5000
+	stock_endpoint_options["to"] = Date(2021, 12, 24)
+	stock_endpoint_options["from"] = Date(2021, 12, 15)
+	stock_endpoint_options["multiplier"] = 1
+	stock_endpoint_options["timespan"] = "day"
+	stock_endpoint_options["ticker"] = stock_ticker_symbol;
+	stock_endpoint_model = model(PolygonAggregatesEndpointModel, my_user_model, stock_endpoint_options)
+
+	# create the URL string -
+	my_stock_url_string = url(POLYGON_URL_STRING, stock_endpoint_model);
+
+	# make the api call -
+	(h_stock, df_stock) = api(PolygonAggregatesEndpointModel, my_stock_url_string);
+
+	# show -
+	nothing;
+end
 
 # ╔═╡ dbc25db6-e592-4e7b-82aa-b7ea9dd7f1ee
 md"""
-### Example 2: Download crypto data for an arbitrary ticker and date range
+##### Download crypto data for an arbitrary ticker and date range
 """
 
-# ╔═╡ 1a6d0624-34cb-4ac2-8e16-843a6e30d813
-md"""
-### Example 3: Download option data for an arbitrary ticker and date range
-"""
+# ╔═╡ 516589ec-3f40-4870-9a37-8e030cf1c951
+begin
+
+	# what crypto ticker do we want to download?
+	crypto_ticker_symbol = "X:BTCUSD";
+	
+	# setup the parameters for the call to the endpoint -
+	crypto_endpoint_options = Dict{String,Any}()
+	crypto_endpoint_options["adjusted"] = true
+	crypto_endpoint_options["sortdirection"] = "asc"
+	crypto_endpoint_options["limit"] = 5000
+	crypto_endpoint_options["to"] = Date(2021, 12, 24)
+	crypto_endpoint_options["from"] = Date(2021, 12, 15)
+	crypto_endpoint_options["multiplier"] = 10
+	crypto_endpoint_options["timespan"] = "minute"
+	crypto_endpoint_options["ticker"] = crypto_ticker_symbol;
+	crypto_endpoint_model = model(PolygonAggregatesEndpointModel, my_user_model, crypto_endpoint_options);
+
+	# create the URL string -
+	my_crypto_url_string = url(POLYGON_URL_STRING, crypto_endpoint_model);
+
+	# make the api call -
+	(h_crypto, df_crypto) = api(PolygonAggregatesEndpointModel, my_crypto_url_string);
+
+	# show -
+	nothing;
+end
+
+# ╔═╡ 9368f7d5-48d2-445c-a55b-2fcc2bf21f8d
+df_crypto
 
 # ╔═╡ 96166eaa-561b-4ef5-b2d4-f649f0f2dae2
 md"""
-### Example 4: Download information about a particular stock ticker
+##### Download information about a particular stock ticker
 """
+
+# ╔═╡ e0a7bb44-20f7-40b1-9597-a6f0ec1162f0
+begin
+
+	# now that we have the user_model, let's build an endpoint model -
+	ticker_data_endpoint_options = Dict{String,Any}()
+	ticker_data_endpoint_options["ticker"] = "AAPL"
+	ticker_data_endpoint_model = model(PolygonTickerDetailsEndpointModel, my_user_model, 
+		ticker_data_endpoint_options);
+
+	# build the ticker data url -
+	my_ticker_data_url_string = url(POLYGON_URL_STRING, ticker_data_endpoint_model)
+
+	# make the call -
+	(h_ticker_data, df_ticker_data) = api(PolygonTickerDetailsEndpointModel, my_ticker_data_url_string)
+
+	# show -
+	nothing
+end
+
+# ╔═╡ c1576bba-c7f6-4c02-bba9-34cec11354a2
+df_ticker_data
 
 # ╔═╡ 95e08b94-ba07-47e5-8982-8719d1af8877
 html"""
 <style>
 main {
     max-width: 1200px;
-    width: 85%;
+    width: 75%;
     margin: auto;
     font-family: "Roboto, monospace";
 }
@@ -144,9 +225,51 @@ a {
 }
 </style>"""
 
+# ╔═╡ 820238fb-a140-4f38-b58b-745df9b6cf5b
+html"""
+<script>
+	// initialize -
+	var section = 0;
+	var subsection = 0;
+	var headers = document.querySelectorAll('h3, h5');
+	
+	// main loop -
+	for (var i=0; i < headers.length; i++) {
+	    
+		var header = headers[i];
+	    var text = header.innerText;
+	    var original = header.getAttribute("text-original");
+	    if (original === null) {
+	        
+			// Save original header text
+	        header.setAttribute("text-original", text);
+	    } else {
+	        
+			// Replace with original text before adding section number
+	        text = header.getAttribute("text-original");
+	    }
+	
+	    var numbering = "";
+	    switch (header.tagName) {
+	        case 'H3':
+	            section += 1;
+	            numbering = section + ".";
+	            subsection = 0;
+	            break;
+	        case 'H5':
+	            subsection += 1;
+	            numbering = section + "." + subsection;
+	            break;
+	    }
+		// update the header text 
+		header.innerText = numbering + " " + text;
+	};
+</script>"""
+
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
+Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
 PQPolygonSDK = "a9381516-e38f-4c81-935c-32707fb4df4c"
 TOML = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
 
@@ -503,10 +626,16 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═f30a37ec-6d8c-11ec-1c66-89962478f84e
 # ╟─44891bab-deb2-4c55-8257-9d9ede10761c
 # ╠═08a4644d-46b8-48f3-a2ea-30a6474aa966
+# ╟─8ff5ac28-b6e6-42e4-b99d-2f26cda1e9be
 # ╟─fe7259dc-6d68-4561-b111-7b8eb62bef25
+# ╠═e4d1c872-5b50-4f7d-aa2e-044c8aef2040
 # ╟─dbc25db6-e592-4e7b-82aa-b7ea9dd7f1ee
-# ╟─1a6d0624-34cb-4ac2-8e16-843a6e30d813
-# ╠═96166eaa-561b-4ef5-b2d4-f649f0f2dae2
-# ╟─95e08b94-ba07-47e5-8982-8719d1af8877
+# ╠═516589ec-3f40-4870-9a37-8e030cf1c951
+# ╠═9368f7d5-48d2-445c-a55b-2fcc2bf21f8d
+# ╟─96166eaa-561b-4ef5-b2d4-f649f0f2dae2
+# ╠═e0a7bb44-20f7-40b1-9597-a6f0ec1162f0
+# ╠═c1576bba-c7f6-4c02-bba9-34cec11354a2
+# ╠═95e08b94-ba07-47e5-8982-8719d1af8877
+# ╠═820238fb-a140-4f38-b58b-745df9b6cf5b
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
