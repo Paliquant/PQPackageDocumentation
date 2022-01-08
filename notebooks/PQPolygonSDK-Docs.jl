@@ -106,12 +106,29 @@ end
 
 # ╔═╡ 8ff5ac28-b6e6-42e4-b99d-2f26cda1e9be
 md"""
-### Stock and Cryptocurreny examples
+### Aggregates Endpoint: Download Stock, Cryptocurreny, Forex and Options Prices
+
+[The Aggregates endpoint on Polygon.io](https://polygon.io/docs/stocks/get_v2_aggs_ticker__stocksticker__range__multiplier___timespan___from___to) can be used to access the Open/High/Low/Close (OHLC) price (along with other data like volume, and volume weighted average price or vwap) at different levels of time resolution ranging from minutes to yearly for stocks, options, cyrptocurrencies and foreign exchange (forex).
+
+In each of these cases, a `PolygonAggregatesEndpointModel` is constructed using the `model` function:
+
+```julia
+model(apiModelType::Type{T}, userModel::PQPolygonSDKUserModel, 
+        options::Dict{String,Any}) -> AbstractPolygonEndpointModel where T<:AbstractPolygonEndpointModel
+```
+
+where the `options` dictionary holds the data for the API call as `key => value` pairs. See the [Aggregates endpoint documentation](https://polygon.io/docs/stocks/get_v2_aggs_ticker__stocksticker__range__multiplier___timespan___from___to) for the data that must be included.  Lastly, we use the `PolygonAggregatesEndpointModel` for stocks, crypto, forex and options, where the ticker symbol convention for each type of asset is the only difference.  
+
 """
 
 # ╔═╡ fe7259dc-6d68-4561-b111-7b8eb62bef25
 md"""
-##### Download daily stock price data for an arbitrary ticker symbol and date range
+##### Download timestamped price data for a ticker symbol and date range
+
+Ticker symbols are unique alphabetical codes that represent a company, e.g., `AAPL` (Apple) or an 
+[exchange traded fund (ETF)](https://www.investopedia.com/articles/investing/122215/spy-spdr-sp-500-trust-etf.asp) such as `SPY`,  which tracks the [Standard & Poor's 500 Index](https://www.investopedia.com/terms/s/sp500.asp), better know as the S&P 500 Index, or just S&P.
+
+Ticker symbols for stocks e.g., `AAPL` or `MSFT` are relatively easy to find and understand. However, ticker symbols for crypto, forex, and in paricular options, are much more complicated. For now let's use the well known ticker symbols `SPY` to demonstrate [the Aggregates endpoint on Polygon.io](https://polygon.io/docs/stocks/get_v2_aggs_ticker__stocksticker__range__multiplier___timespan___from___to). However, [Polygon.io](https://polygon.io) has a collection of [reference data endpints](https://polygon.io/docs/stocks/get_v3_reference_tickers) for querying information about ticker symbols that we'll demonstrate below. 
 """
 
 # ╔═╡ e4d1c872-5b50-4f7d-aa2e-044c8aef2040
@@ -132,7 +149,7 @@ begin
 	stock_endpoint_options["ticker"] = stock_ticker_symbol;
 	stock_endpoint_model = model(PolygonAggregatesEndpointModel, my_user_model, stock_endpoint_options)
 
-	# create the URL string -
+	# create the URL string for this endpoint -
 	my_stock_url_string = url(POLYGON_URL_STRING, stock_endpoint_model);
 
 	# make the api call -
@@ -145,6 +162,9 @@ end
 # ╔═╡ dbc25db6-e592-4e7b-82aa-b7ea9dd7f1ee
 md"""
 ##### Download crypto data for an arbitrary ticker and date range
+
+For cryptocurrencies, the [Polygon.io](https://polygon.io) convention for ticker symbols is `X:<currency>USD`, where `currency` denotes the particular cryptocurrency and `USD` denotes United States Dollars. For example, for [bitcoin](https://bitcoin.org/) in the United States, the [Polygon.io](https://polygon.io) ticker is given by: `X:BTCUSD`.
+
 """
 
 # ╔═╡ 516589ec-3f40-4870-9a37-8e030cf1c951
@@ -160,8 +180,8 @@ begin
 	crypto_endpoint_options["limit"] = 5000
 	crypto_endpoint_options["to"] = Date(2021, 12, 24)
 	crypto_endpoint_options["from"] = Date(2021, 12, 15)
-	crypto_endpoint_options["multiplier"] = 10
-	crypto_endpoint_options["timespan"] = "minute"
+	crypto_endpoint_options["multiplier"] = 1
+	crypto_endpoint_options["timespan"] = "day"
 	crypto_endpoint_options["ticker"] = crypto_ticker_symbol;
 	crypto_endpoint_model = model(PolygonAggregatesEndpointModel, my_user_model, crypto_endpoint_options);
 
@@ -621,7 +641,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 
 # ╔═╡ Cell order:
 # ╟─ee95e493-b7a6-43df-88c0-88ecf5028843
-# ╟─b0aa81e5-adcd-401e-bce8-ee63960378ce
+# ╠═b0aa81e5-adcd-401e-bce8-ee63960378ce
 # ╟─2c357a88-e6da-420f-bb50-0a7bcd824de3
 # ╠═f30a37ec-6d8c-11ec-1c66-89962478f84e
 # ╟─44891bab-deb2-4c55-8257-9d9ede10761c
