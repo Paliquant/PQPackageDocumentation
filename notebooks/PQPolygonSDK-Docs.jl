@@ -168,9 +168,12 @@ end
 
 # ╔═╡ dbc25db6-e592-4e7b-82aa-b7ea9dd7f1ee
 md"""
-##### Download crypto data for an arbitrary ticker and date range
+##### Download crypto data for an arbitrary cryptocurrency and date range
 
-For cryptocurrencies, the [Polygon.io](https://polygon.io) convention for ticker symbols is `X:<currency>USD`, where `currency` denotes the particular cryptocurrency and `USD` denotes United States Dollars. For example, for [bitcoin](https://bitcoin.org/) in the United States, the [Polygon.io](https://polygon.io) ticker is given by: `X:BTCUSD`.
+For cryptocurrencies, the [Polygon.io](https://polygon.io) convention for ticker symbols is `X:<cyrpto>XXX`, where `crypto` denotes the particular cryptocurrency and `XXX` denotes the currency you want to see the price of the cyrpto measured in. 
+
+In the United States, we 
+would typcially use United States Dollars `USD`, but in the Eurozone, the measurement currency would be in € or `EUR`. For example, for [bitcoin](https://bitcoin.org/) demarcated United States Dollars (USD), the [Polygon.io](https://polygon.io) ticker is given by: `X:BTCUSD`, while the [bitcoin](https://bitcoin.org/) ticker symbol demarcated in € would be: `X:BTCEUR`.
 
 """
 
@@ -201,6 +204,9 @@ begin
 	# show -
 	nothing;
 end
+
+# ╔═╡ 6617f059-c2ad-461e-8e83-73c85441ab5d
+h_crypto
 
 # ╔═╡ 9368f7d5-48d2-445c-a55b-2fcc2bf21f8d
 df_crypto
@@ -658,6 +664,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═e4d1c872-5b50-4f7d-aa2e-044c8aef2040
 # ╟─dbc25db6-e592-4e7b-82aa-b7ea9dd7f1ee
 # ╠═516589ec-3f40-4870-9a37-8e030cf1c951
+# ╠═6617f059-c2ad-461e-8e83-73c85441ab5d
 # ╠═9368f7d5-48d2-445c-a55b-2fcc2bf21f8d
 # ╟─96166eaa-561b-4ef5-b2d4-f649f0f2dae2
 # ╠═e0a7bb44-20f7-40b1-9597-a6f0ec1162f0
