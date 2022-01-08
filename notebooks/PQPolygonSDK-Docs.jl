@@ -43,7 +43,7 @@ md"""
 md"""
 ### Introduction
 
-Data is the key to making great decisions, and this is especially true in the finance world. [Polygon.io](https://polygon.io) is a financial data warehouse that has an application programming interface (API) which you can use to access all kinds of financial data and other information. The `PQPolygonSDK.jl` package is a software development kit (SDK) written in the Julia programing language for the [Polygon.io](https://polygon.io) application programming interface.
+Data is the key to making great decisions, and this is especially true in the finance world. [Polygon.io](https://polygon.io) is a financial data warehouse that has an application programming interface (API) which you can use to access all kinds of financial data and other information. The `PQPolygonSDK.jl` package is a software development kit (SDK) written in the [Julia programing language](https://julialang.org) for the [Polygon.io](https://polygon.io) application programming interface.
 
 [Polygon.io](https://polygon.io) was founded by former Googlers in 2016. Since September of 2020, [Polygon.io](https://polygon.io) has provided both [free and paid access](https://polygon.io/pricing) to current and historical [stock](https://polygon.io/docs/stocks/getting-started), [option](https://polygon.io/docs/options/getting-started), [crypto](https://polygon.io/docs/crypto/getting-started) and [forex](https://polygon.io/docs/forex/getting-started) data.  
 Check out the [Polygon.io blog](https://polygon.io/blog/) for the latest updates and developments from [Polygon.io](https://polygon.io).
@@ -77,7 +77,7 @@ julia> using PQPolygonSDK
 md"""
 ### Create a User Model
 
-All [Polygon.io](https://polygon.io) application programming interface (API) calls start by creating a `PQPolygonSDKUserModel` object using the function:
+All [Polygon.io](https://polygon.io) application programming interface (API) calls in the `PQPolygonSDK.jl` package start by creating a `PQPolygonSDKUserModel` object using the function:
 
 
 ```julia    
@@ -85,7 +85,14 @@ model(userModelType::Type{PQPolygonSDKUserModel},
     options::Dict{String,Any}) -> PQPolygonSDKUserModel
 ```
     
-where the `options` dictionary holds `email` and `apikey` key-value pairs.
+where the `options` dictionary holds `email` and `apikey` key-value pairs. The `PQPolygonSDKUserModel` object is passed as an argument to the `model` function:
+
+```julia
+model(apiModelType::Type{T}, userModel::PQPolygonSDKUserModel, 
+        options::Dict{String,Any}) -> AbstractPolygonEndpointModel where T<:AbstractPolygonEndpointModel
+```
+
+to build an endpoint-specific model (as well shall see below).
 
 """
 
@@ -641,7 +648,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 
 # ╔═╡ Cell order:
 # ╟─ee95e493-b7a6-43df-88c0-88ecf5028843
-# ╠═b0aa81e5-adcd-401e-bce8-ee63960378ce
+# ╟─b0aa81e5-adcd-401e-bce8-ee63960378ce
 # ╟─2c357a88-e6da-420f-bb50-0a7bcd824de3
 # ╠═f30a37ec-6d8c-11ec-1c66-89962478f84e
 # ╟─44891bab-deb2-4c55-8257-9d9ede10761c
