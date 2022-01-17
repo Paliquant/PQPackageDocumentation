@@ -213,7 +213,7 @@ df_crypto
 
 # ╔═╡ 96166eaa-561b-4ef5-b2d4-f649f0f2dae2
 md"""
-##### Download information about a particular stock ticker
+### Download information about a particular asset ticker symbol
 """
 
 # ╔═╡ e0a7bb44-20f7-40b1-9597-a6f0ec1162f0
@@ -234,9 +234,6 @@ begin
 	# show -
 	nothing
 end
-
-# ╔═╡ c1576bba-c7f6-4c02-bba9-34cec11354a2
-df_ticker_data
 
 # ╔═╡ 95e08b94-ba07-47e5-8982-8719d1af8877
 html"""
@@ -668,7 +665,6 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═9368f7d5-48d2-445c-a55b-2fcc2bf21f8d
 # ╟─96166eaa-561b-4ef5-b2d4-f649f0f2dae2
 # ╠═e0a7bb44-20f7-40b1-9597-a6f0ec1162f0
-# ╠═c1576bba-c7f6-4c02-bba9-34cec11354a2
 # ╠═95e08b94-ba07-47e5-8982-8719d1af8877
 # ╠═820238fb-a140-4f38-b58b-745df9b6cf5b
 # ╟─00000000-0000-0000-0000-000000000001
