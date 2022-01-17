@@ -13,24 +13,6 @@ begin
 	using Dates
 	using PQPolygonSDK
 	
-	# setup paths -
-	_PATH_TO_ROOT = pwd()
-	_PATH_TO_CONFIG = joinpath(_PATH_TO_ROOT,"config")
-
-	# load the configuration information -
-	# alias the Polygon.io URL -
-    POLYGON_URL_STRING = "https://api.polygon.io"
-
-    # What we have here is the classic good news, bad news situation ...
-    # Bad news: We don't check in our Polygon.io API key to GitHub (sorry). 
-    # Good news: Polygon.io API keys are free. check out: https://polygon.io -
-    configuration_dictionary = TOML.parsefile(joinpath(_PATH_TO_CONFIG, "Configuration.toml"))
-
-    # get some stuff from the configuration dictionary -
-	# this needs to be YOUR api key, either hardcoded -or- from a config file
-    POLYGON_API_KEY = configuration_dictionary["API"]["polygon_api_key"] 
-	POLYGON_API_EMAIL = configuration_dictionary["EMAIL"]["email"] 
-
 	# show -
 	nothing
 end
@@ -56,10 +38,22 @@ In this notebook, we'll discuss how to use the `PQPolygonSDK.jl` package to quer
 * Download information about a stock ticker e.g., Apple (AAPL) and Microsoft (MSFT)
 """
 
+# ╔═╡ fdc9fa10-4ac0-4055-ae8a-db3f16f2ae36
+
+
 # ╔═╡ 66c5e100-ce9c-4387-a662-cd93cf76718b
 
 
 # ╔═╡ 672868d2-c09a-4230-8d90-a09d7af7ae8d
+
+
+# ╔═╡ dbd1eead-5e9f-4861-90a5-badcb5b2ad57
+
+
+# ╔═╡ e6485417-18d7-4cc9-8f7a-35bdb05de4e3
+
+
+# ╔═╡ d2a0ae2b-80e0-4ef8-bd39-51663b17e448
 
 
 # ╔═╡ 2c357a88-e6da-420f-bb50-0a7bcd824de3
@@ -79,6 +73,18 @@ Once installed, to use `PQPolygonSDK.jl` in your projects (like a Pluto notebook
 julia> using PQPolygonSDK
 ```
 """
+
+# ╔═╡ f87b1e0a-e6bb-4931-a590-15c2f2865572
+
+
+# ╔═╡ 106d8bd6-beaf-4552-8a1c-e0536137ad43
+
+
+# ╔═╡ 7fcd9ada-dd7c-4a02-9f12-b998ea9df3ad
+
+
+# ╔═╡ 9c38031a-7a57-45ce-baa7-c13df489a3d8
+
 
 # ╔═╡ 44891bab-deb2-4c55-8257-9d9ede10761c
 md"""
@@ -132,6 +138,18 @@ The `api` method returns two pieces of data, a header dictionary holding technic
 
 """
 
+# ╔═╡ 40db3a68-cd4e-45df-89a0-f9f1eb8d7227
+
+
+# ╔═╡ 96fde2cf-c457-4f40-a8d3-1351a02abf49
+
+
+# ╔═╡ f5398c1d-4f6f-4d10-8410-0ed9db82ae74
+
+
+# ╔═╡ f650a3ae-56a3-4807-8e99-2a7d1693bff0
+
+
 # ╔═╡ 8ff5ac28-b6e6-42e4-b99d-2f26cda1e9be
 md"""
 ### Aggregates Endpoint: Download Stock, Cryptocurreny and Forex Price Data
@@ -142,32 +160,45 @@ In each of these cases, a `PolygonAggregatesEndpointModel` is constructed using 
 
 ```julia
 model(apiModelType::Type{T}, userModel::PQPolygonSDKUserModel, 
-        options::Dict{String,Any}) -> AbstractPolygonEndpointModel where T<:AbstractPolygonEndpointModel
+        options::Dict{String,Any}) -> AbstractPolygonEndpointModel 
+			where T<:AbstractPolygonEndpointModel
 ```
 
 where the `options` dictionary holds the data for the API call as `key => value` pairs. See the [Aggregates endpoint documentation](https://polygon.io/docs/stocks/get_v2_aggs_ticker__stocksticker__range__multiplier___timespan___from___to) for the data that must be included.  Lastly, we use the `PolygonAggregatesEndpointModel` for stocks, crypto, forex, and options, where the ticker symbol convention for each type of asset is the only difference.  
 
 """
 
+# ╔═╡ 80f33d55-bfaf-4558-a638-6613b448d6ee
+
+
+# ╔═╡ 9c54bf05-9641-4505-8fbc-00d4a7ac468f
+
+
+# ╔═╡ 884954ce-1d0d-482a-be99-2748c343a622
+
+
+# ╔═╡ 30fc61a4-61f6-48aa-b947-65b7d6531a6f
+
+
+# ╔═╡ 68a6ab3b-6fe2-4551-9d47-2a80d92e4fc6
+
+
+# ╔═╡ ec916364-67aa-46f3-a656-0b3d44885492
+
+
+# ╔═╡ 31a69d2b-67cf-4109-8db8-23744e3d0098
+
+
+# ╔═╡ 62c920f7-aaab-4339-ba2f-9713e9203454
+
+
+# ╔═╡ d4a2f6bc-792e-4dc3-9179-d0a32d9a1ac8
+
+
 # ╔═╡ 041c79b9-d930-4706-a020-8fc2183ef78c
 md"""
 ##### Code to build a user model
 """
-
-# ╔═╡ 08a4644d-46b8-48f3-a2ea-30a6474aa966
-begin
-
-	# create an options dictionary - holds data about the user (you)
-	user_model_options_dict = Dict{String,Any}()
-	user_model_options_dict["apikey"] = POLYGON_API_KEY
-	user_model_options_dict["email"] = POLYGON_API_EMAIL
-	
-	# create my user model -
-	my_user_model = model(PQPolygonSDKUserModel, user_model_options_dict);
-
-	# show -
-	nothing
-end
 
 # ╔═╡ fe7259dc-6d68-4561-b111-7b8eb62bef25
 md"""
@@ -181,34 +212,6 @@ Ticker symbols for stocks e.g., `AAPL` or `MSFT` are relatively easy to find and
 However, [Polygon.io](https://polygon.io) has a collection of [reference data endpints](https://polygon.io/docs/stocks/get_v3_reference_tickers) for querying information about ticker symbols that we'll demonstrate below. 
 """
 
-# ╔═╡ e4d1c872-5b50-4f7d-aa2e-044c8aef2040
-begin
-
-	# what ticker do we want to download?
-	stock_ticker_symbol = "SPY";
-	
-	# setup the parameters for the call to the endpoint -
-	stock_endpoint_options = Dict{String,Any}()
-	stock_endpoint_options["adjusted"] = true
-	stock_endpoint_options["sortdirection"] = "asc"
-	stock_endpoint_options["limit"] = 5000
-	stock_endpoint_options["to"] = Date(2021, 12, 24)
-	stock_endpoint_options["from"] = Date(2021, 12, 15)
-	stock_endpoint_options["multiplier"] = 1
-	stock_endpoint_options["timespan"] = "day"
-	stock_endpoint_options["ticker"] = stock_ticker_symbol;
-	stock_endpoint_model = model(PolygonAggregatesEndpointModel, my_user_model, stock_endpoint_options)
-
-	# create the URL string for this endpoint -
-	my_stock_url_string = url(POLYGON_URL_STRING, stock_endpoint_model);
-
-	# make the API call -
-	(h_stock, df_stock) = api(PolygonAggregatesEndpointModel, my_stock_url_string);
-
-	# show -
-	nothing;
-end
-
 # ╔═╡ dbc25db6-e592-4e7b-82aa-b7ea9dd7f1ee
 md"""
 ##### Download crypto data for an arbitrary cryptocurrency and date range
@@ -220,63 +223,10 @@ would typcially use United States Dollars `USD`, but in the Eurozone, the measur
 
 """
 
-# ╔═╡ 516589ec-3f40-4870-9a37-8e030cf1c951
-begin
-
-	# what crypto ticker do we want to download?
-	crypto_ticker_symbol = "X:BTCUSD";
-	
-	# setup the parameters for the call to the endpoint -
-	crypto_endpoint_options = Dict{String,Any}()
-	crypto_endpoint_options["adjusted"] = true
-	crypto_endpoint_options["sortdirection"] = "asc"
-	crypto_endpoint_options["limit"] = 5000
-	crypto_endpoint_options["to"] = Date(2021, 12, 24)
-	crypto_endpoint_options["from"] = Date(2021, 12, 15)
-	crypto_endpoint_options["multiplier"] = 1
-	crypto_endpoint_options["timespan"] = "day"
-	crypto_endpoint_options["ticker"] = crypto_ticker_symbol;
-	crypto_endpoint_model = model(PolygonAggregatesEndpointModel, my_user_model, crypto_endpoint_options);
-
-	# create the URL string -
-	my_crypto_url_string = url(POLYGON_URL_STRING, crypto_endpoint_model);
-
-	# make the api call -
-	(h_crypto, df_crypto) = api(PolygonAggregatesEndpointModel, my_crypto_url_string);
-
-	# show -
-	nothing;
-end
-
-# ╔═╡ 6617f059-c2ad-461e-8e83-73c85441ab5d
-h_crypto
-
-# ╔═╡ 9368f7d5-48d2-445c-a55b-2fcc2bf21f8d
-df_crypto
-
 # ╔═╡ 96166eaa-561b-4ef5-b2d4-f649f0f2dae2
 md"""
 ### Download information about a particular asset ticker symbol
 """
-
-# ╔═╡ e0a7bb44-20f7-40b1-9597-a6f0ec1162f0
-begin
-
-	# now that we have the user_model, let's build an endpoint model -
-	ticker_data_endpoint_options = Dict{String,Any}()
-	ticker_data_endpoint_options["ticker"] = "AAPL"
-	ticker_data_endpoint_model = model(PolygonTickerDetailsEndpointModel, my_user_model, 
-		ticker_data_endpoint_options);
-
-	# build the ticker data url -
-	my_ticker_data_url_string = url(POLYGON_URL_STRING, ticker_data_endpoint_model)
-
-	# make the call -
-	(h_ticker_data, df_ticker_data) = api(PolygonTickerDetailsEndpointModel, my_ticker_data_url_string)
-
-	# show -
-	nothing
-end
 
 # ╔═╡ 2592fa9a-4194-4206-ac8b-e9727d63b550
 TableOfContents(title="📚 Table of Contents", indent=true, depth=5, aside=true)
@@ -341,6 +291,129 @@ html"""
 		header.innerText = numbering + " " + text;
 	};
 </script>"""
+
+# ╔═╡ 5d57883d-c34a-4e5f-9106-b6cad4050a66
+begin
+
+	# setup paths -
+	_PATH_TO_ROOT = pwd()
+	_PATH_TO_CONFIG = joinpath(_PATH_TO_ROOT,"config")
+
+	# load the configuration information -
+	# alias the Polygon.io URL -
+    POLYGON_URL_STRING = "https://api.polygon.io"
+
+    # What we have here is the classic good news, bad news situation ...
+    # Bad news: We don't check in our Polygon.io API key to GitHub (sorry). 
+    # Good news: Polygon.io API keys are free. check out: https://polygon.io -
+    configuration_dictionary = TOML.parsefile(joinpath(_PATH_TO_CONFIG, "Configuration.toml"))
+
+    # get some stuff from the configuration dictionary -
+	# this needs to be YOUR api key, either hardcoded -or- from a config file
+    POLYGON_API_KEY = configuration_dictionary["API"]["polygon_api_key"] 
+	POLYGON_API_EMAIL = configuration_dictionary["EMAIL"]["email"] 
+
+	# show -
+	nothing
+end
+
+# ╔═╡ 08a4644d-46b8-48f3-a2ea-30a6474aa966
+begin
+
+	# create an options dictionary - holds data about the user (you)
+	user_model_options_dict = Dict{String,Any}()
+	user_model_options_dict["apikey"] = POLYGON_API_KEY
+	user_model_options_dict["email"] = POLYGON_API_EMAIL
+	
+	# create my user model -
+	my_user_model = model(PQPolygonSDKUserModel, user_model_options_dict);
+
+	# show -
+	nothing
+end
+
+# ╔═╡ e4d1c872-5b50-4f7d-aa2e-044c8aef2040
+begin
+
+	# what ticker do we want to download?
+	stock_ticker_symbol = "SPY";
+	
+	# setup the parameters for the call to the endpoint -
+	stock_endpoint_options = Dict{String,Any}()
+	stock_endpoint_options["adjusted"] = true
+	stock_endpoint_options["sortdirection"] = "asc"
+	stock_endpoint_options["limit"] = 5000
+	stock_endpoint_options["to"] = Date(2021, 12, 24)
+	stock_endpoint_options["from"] = Date(2021, 12, 15)
+	stock_endpoint_options["multiplier"] = 1
+	stock_endpoint_options["timespan"] = "day"
+	stock_endpoint_options["ticker"] = stock_ticker_symbol;
+	stock_endpoint_model = model(PolygonAggregatesEndpointModel, 
+		my_user_model, stock_endpoint_options)
+
+	# create the URL string for this endpoint -
+	my_stock_url_string = url(POLYGON_URL_STRING, stock_endpoint_model);
+
+	# make the API call -
+	(h_stock, df_stock) = api(PolygonAggregatesEndpointModel, my_stock_url_string);
+
+	# show -
+	nothing;
+end
+
+# ╔═╡ 516589ec-3f40-4870-9a37-8e030cf1c951
+begin
+
+	# what crypto ticker do we want to download?
+	crypto_ticker_symbol = "X:BTCUSD";
+	
+	# setup the parameters for the call to the endpoint -
+	crypto_endpoint_options = Dict{String,Any}()
+	crypto_endpoint_options["adjusted"] = true
+	crypto_endpoint_options["sortdirection"] = "asc"
+	crypto_endpoint_options["limit"] = 5000
+	crypto_endpoint_options["to"] = Date(2021, 12, 24)
+	crypto_endpoint_options["from"] = Date(2021, 12, 15)
+	crypto_endpoint_options["multiplier"] = 1
+	crypto_endpoint_options["timespan"] = "day"
+	crypto_endpoint_options["ticker"] = crypto_ticker_symbol;
+	crypto_endpoint_model = model(PolygonAggregatesEndpointModel, 
+		my_user_model, crypto_endpoint_options);
+
+	# create the URL string -
+	my_crypto_url_string = url(POLYGON_URL_STRING, crypto_endpoint_model);
+
+	# make the API call -
+	(h_crypto, df_crypto) = api(PolygonAggregatesEndpointModel, my_crypto_url_string);
+
+	# show -
+	nothing;
+end
+
+# ╔═╡ 6617f059-c2ad-461e-8e83-73c85441ab5d
+h_crypto
+
+# ╔═╡ 9368f7d5-48d2-445c-a55b-2fcc2bf21f8d
+df_crypto
+
+# ╔═╡ e0a7bb44-20f7-40b1-9597-a6f0ec1162f0
+begin
+
+	# now that we have the user_model, let's build an endpoint model -
+	ticker_data_endpoint_options = Dict{String,Any}()
+	ticker_data_endpoint_options["ticker"] = "AAPL"
+	ticker_data_endpoint_model = model(PolygonTickerDetailsEndpointModel, my_user_model, 
+		ticker_data_endpoint_options);
+
+	# build the ticker data url -
+	my_ticker_data_url_string = url(POLYGON_URL_STRING, ticker_data_endpoint_model)
+
+	# make the call -
+	(h_ticker_data, df_ticker_data) = api(PolygonTickerDetailsEndpointModel, my_ticker_data_url_string)
+
+	# show -
+	nothing
+end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -741,12 +814,33 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╔═╡ Cell order:
 # ╟─ee95e493-b7a6-43df-88c0-88ecf5028843
 # ╟─b0aa81e5-adcd-401e-bce8-ee63960378ce
+# ╟─fdc9fa10-4ac0-4055-ae8a-db3f16f2ae36
 # ╟─66c5e100-ce9c-4387-a662-cd93cf76718b
 # ╟─672868d2-c09a-4230-8d90-a09d7af7ae8d
+# ╟─dbd1eead-5e9f-4861-90a5-badcb5b2ad57
+# ╟─e6485417-18d7-4cc9-8f7a-35bdb05de4e3
+# ╟─d2a0ae2b-80e0-4ef8-bd39-51663b17e448
 # ╟─2c357a88-e6da-420f-bb50-0a7bcd824de3
 # ╠═f30a37ec-6d8c-11ec-1c66-89962478f84e
+# ╟─f87b1e0a-e6bb-4931-a590-15c2f2865572
+# ╟─106d8bd6-beaf-4552-8a1c-e0536137ad43
+# ╟─7fcd9ada-dd7c-4a02-9f12-b998ea9df3ad
+# ╟─9c38031a-7a57-45ce-baa7-c13df489a3d8
 # ╟─44891bab-deb2-4c55-8257-9d9ede10761c
+# ╟─40db3a68-cd4e-45df-89a0-f9f1eb8d7227
+# ╟─96fde2cf-c457-4f40-a8d3-1351a02abf49
+# ╟─f5398c1d-4f6f-4d10-8410-0ed9db82ae74
+# ╟─f650a3ae-56a3-4807-8e99-2a7d1693bff0
 # ╟─8ff5ac28-b6e6-42e4-b99d-2f26cda1e9be
+# ╟─80f33d55-bfaf-4558-a638-6613b448d6ee
+# ╟─9c54bf05-9641-4505-8fbc-00d4a7ac468f
+# ╟─884954ce-1d0d-482a-be99-2748c343a622
+# ╟─30fc61a4-61f6-48aa-b947-65b7d6531a6f
+# ╟─68a6ab3b-6fe2-4551-9d47-2a80d92e4fc6
+# ╟─ec916364-67aa-46f3-a656-0b3d44885492
+# ╟─31a69d2b-67cf-4109-8db8-23744e3d0098
+# ╟─62c920f7-aaab-4339-ba2f-9713e9203454
+# ╟─d4a2f6bc-792e-4dc3-9179-d0a32d9a1ac8
 # ╟─041c79b9-d930-4706-a020-8fc2183ef78c
 # ╠═08a4644d-46b8-48f3-a2ea-30a6474aa966
 # ╟─fe7259dc-6d68-4561-b111-7b8eb62bef25
@@ -757,8 +851,9 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═9368f7d5-48d2-445c-a55b-2fcc2bf21f8d
 # ╟─96166eaa-561b-4ef5-b2d4-f649f0f2dae2
 # ╠═e0a7bb44-20f7-40b1-9597-a6f0ec1162f0
-# ╠═2592fa9a-4194-4206-ac8b-e9727d63b550
+# ╟─2592fa9a-4194-4206-ac8b-e9727d63b550
 # ╠═95e08b94-ba07-47e5-8982-8719d1af8877
 # ╠═820238fb-a140-4f38-b58b-745df9b6cf5b
+# ╠═5d57883d-c34a-4e5f-9106-b6cad4050a66
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
