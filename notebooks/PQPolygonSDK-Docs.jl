@@ -50,12 +50,6 @@ In this notebook, we'll discuss how to use the `PQPolygonSDK.jl` package to quer
 # ╔═╡ dbd1eead-5e9f-4861-90a5-badcb5b2ad57
 
 
-# ╔═╡ e6485417-18d7-4cc9-8f7a-35bdb05de4e3
-
-
-# ╔═╡ d2a0ae2b-80e0-4ef8-bd39-51663b17e448
-
-
 # ╔═╡ 2c357a88-e6da-420f-bb50-0a7bcd824de3
 md"""
 ##### Installation and Requirements
@@ -189,12 +183,6 @@ where the `options` dictionary holds the data for the API call as `key => value`
 # ╔═╡ 31a69d2b-67cf-4109-8db8-23744e3d0098
 
 
-# ╔═╡ 62c920f7-aaab-4339-ba2f-9713e9203454
-
-
-# ╔═╡ d4a2f6bc-792e-4dc3-9179-d0a32d9a1ac8
-
-
 # ╔═╡ 041c79b9-d930-4706-a020-8fc2183ef78c
 md"""
 ##### Code to build a user model
@@ -236,7 +224,7 @@ html"""
 <style>
 main {
     max-width: 1200px;
-    width: 75%;
+    width: 72%;
     margin: auto;
     font-family: "Roboto, monospace";
 }
@@ -818,8 +806,6 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─66c5e100-ce9c-4387-a662-cd93cf76718b
 # ╟─672868d2-c09a-4230-8d90-a09d7af7ae8d
 # ╟─dbd1eead-5e9f-4861-90a5-badcb5b2ad57
-# ╟─e6485417-18d7-4cc9-8f7a-35bdb05de4e3
-# ╟─d2a0ae2b-80e0-4ef8-bd39-51663b17e448
 # ╟─2c357a88-e6da-420f-bb50-0a7bcd824de3
 # ╠═f30a37ec-6d8c-11ec-1c66-89962478f84e
 # ╟─f87b1e0a-e6bb-4931-a590-15c2f2865572
@@ -839,8 +825,6 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─68a6ab3b-6fe2-4551-9d47-2a80d92e4fc6
 # ╟─ec916364-67aa-46f3-a656-0b3d44885492
 # ╟─31a69d2b-67cf-4109-8db8-23744e3d0098
-# ╟─62c920f7-aaab-4339-ba2f-9713e9203454
-# ╟─d4a2f6bc-792e-4dc3-9179-d0a32d9a1ac8
 # ╟─041c79b9-d930-4706-a020-8fc2183ef78c
 # ╠═08a4644d-46b8-48f3-a2ea-30a6474aa966
 # ╟─fe7259dc-6d68-4561-b111-7b8eb62bef25
