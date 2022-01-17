@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.17.4
+# v0.17.5
 
 using Markdown
 using InteractiveUtils
@@ -8,6 +8,7 @@ using InteractiveUtils
 begin
 
 	# load required external packages -
+	using PlutoUI
 	using TOML
 	using Dates
 	using PQPolygonSDK
@@ -55,6 +56,12 @@ In this notebook, we'll discuss how to use the `PQPolygonSDK.jl` package to quer
 * Download information about a stock ticker e.g., Apple (AAPL) and Microsoft (MSFT)
 """
 
+# ╔═╡ 66c5e100-ce9c-4387-a662-cd93cf76718b
+
+
+# ╔═╡ 672868d2-c09a-4230-8d90-a09d7af7ae8d
+
+
 # ╔═╡ 2c357a88-e6da-420f-bb50-0a7bcd824de3
 md"""
 ##### Installation and Requirements
@@ -75,9 +82,17 @@ julia> using PQPolygonSDK
 
 # ╔═╡ 44891bab-deb2-4c55-8257-9d9ede10761c
 md"""
-### Create a User Model
+### Overview of a Polygon API call using the PQPolygonSDK package
 
-All [Polygon.io](https://polygon.io) application programming interface (API) calls in the `PQPolygonSDK.jl` package start by creating a `PQPolygonSDKUserModel` object using the function:
+There are four steps required to make a Polygon.io API call using the `PQPolygonSDK.jl` package:
+
+1. Create a `PQPolygonSDKUserModel` object
+1. Create an instance of an `AbstractPolygonEndpointModel` object
+1. Use the user and endpoint models to build the actual URL string
+1. Call the API and get data back.
+
+##### Build a user model
+All [Polygon.io](https://polygon.io) application programming interface (API) calls in the `PQPolygonSDK.jl` package are started by creating a `PQPolygonSDKUserModel` object using the function:
 
 
 ```julia    
@@ -85,15 +100,58 @@ model(userModelType::Type{PQPolygonSDKUserModel},
     options::Dict{String,Any}) -> PQPolygonSDKUserModel
 ```
     
-where the `options` dictionary holds `email` and `apikey` key-value pairs. The `PQPolygonSDKUserModel` object is passed as an argument to the `model` function:
+where the `options` dictionary holds `email` and `apikey` key-value pairs. 
+
+##### Build an endpoint model
+The `PQPolygonSDKUserModel` object can then be passed as an argument to a `model` function:
 
 ```julia
 model(apiModelType::Type{T}, userModel::PQPolygonSDKUserModel, 
         options::Dict{String,Any}) -> AbstractPolygonEndpointModel where T<:AbstractPolygonEndpointModel
 ```
 
-to build an endpoint-specific model (as well shall see below).
+to build an endpoint-specific model where the information for a particular endpoint is passed into the `model` method via an `options` dictionary.
 
+##### Encode the URL string 
+The endpoint specific model is then used to create the specific URL for the call using the `url` function: 
+
+```julia
+# create the URL string for this endpoint -
+my_stock_url_string = url(POLYGON_URL_STRING, stock_endpoint_model);
+```
+
+##### Make the API call
+Finally, the URL and type of API model type are used to make the API call:
+
+```julia
+# make the API call -
+(h_stock, df_stock) = api(PolygonAggregatesEndpointModel, my_stock_url_string);
+```
+
+The `api` method returns two pieces of data, a header dictionary holding technical information about the call (and potentially error information of the call failed). The data for the call is returned as a [DataFrame](https://dataframes.juliadata.org/stable/). 
+
+"""
+
+# ╔═╡ 8ff5ac28-b6e6-42e4-b99d-2f26cda1e9be
+md"""
+### Aggregates Endpoint: Download Stock, Cryptocurreny and Forex Price Data
+
+[The Aggregates endpoint on Polygon.io](https://polygon.io/docs/stocks/get_v2_aggs_ticker__stocksticker__range__multiplier___timespan___from___to) can be used to access the Open/High/Low/Close (OHLC) price (along with other data like volume, and volume-weighted average price or vwap) at different time resolutions ranging from minutes to yearly for stocks, options, cryptocurrencies and foreign exchange (forex). In this section, let's look at examples for stocks, cryptocurrencies, and forex. We'll save options for a later time.
+
+In each of these cases, a `PolygonAggregatesEndpointModel` is constructed using the `model` function:
+
+```julia
+model(apiModelType::Type{T}, userModel::PQPolygonSDKUserModel, 
+        options::Dict{String,Any}) -> AbstractPolygonEndpointModel where T<:AbstractPolygonEndpointModel
+```
+
+where the `options` dictionary holds the data for the API call as `key => value` pairs. See the [Aggregates endpoint documentation](https://polygon.io/docs/stocks/get_v2_aggs_ticker__stocksticker__range__multiplier___timespan___from___to) for the data that must be included.  Lastly, we use the `PolygonAggregatesEndpointModel` for stocks, crypto, forex, and options, where the ticker symbol convention for each type of asset is the only difference.  
+
+"""
+
+# ╔═╡ 041c79b9-d930-4706-a020-8fc2183ef78c
+md"""
+##### Code to build a user model
 """
 
 # ╔═╡ 08a4644d-46b8-48f3-a2ea-30a6474aa966
@@ -111,31 +169,16 @@ begin
 	nothing
 end
 
-# ╔═╡ 8ff5ac28-b6e6-42e4-b99d-2f26cda1e9be
-md"""
-### Aggregates Endpoint: Download Stock, Cryptocurreny, Forex and Options Prices
-
-[The Aggregates endpoint on Polygon.io](https://polygon.io/docs/stocks/get_v2_aggs_ticker__stocksticker__range__multiplier___timespan___from___to) can be used to access the Open/High/Low/Close (OHLC) price (along with other data like volume, and volume weighted average price or vwap) at different levels of time resolution ranging from minutes to yearly for stocks, options, cyrptocurrencies and foreign exchange (forex).
-
-In each of these cases, a `PolygonAggregatesEndpointModel` is constructed using the `model` function:
-
-```julia
-model(apiModelType::Type{T}, userModel::PQPolygonSDKUserModel, 
-        options::Dict{String,Any}) -> AbstractPolygonEndpointModel where T<:AbstractPolygonEndpointModel
-```
-
-where the `options` dictionary holds the data for the API call as `key => value` pairs. See the [Aggregates endpoint documentation](https://polygon.io/docs/stocks/get_v2_aggs_ticker__stocksticker__range__multiplier___timespan___from___to) for the data that must be included.  Lastly, we use the `PolygonAggregatesEndpointModel` for stocks, crypto, forex and options, where the ticker symbol convention for each type of asset is the only difference.  
-
-"""
-
 # ╔═╡ fe7259dc-6d68-4561-b111-7b8eb62bef25
 md"""
 ##### Download timestamped price data for a ticker symbol and date range
 
 Ticker symbols are unique alphabetical codes that represent a company, e.g., `AAPL` (Apple) or an 
-[exchange traded fund (ETF)](https://www.investopedia.com/articles/investing/122215/spy-spdr-sp-500-trust-etf.asp) such as `SPY`,  which tracks the [Standard & Poor's 500 Index](https://www.investopedia.com/terms/s/sp500.asp), better know as the S&P 500 Index, or just S&P.
+[exchange traded fund (ETF)](https://www.investopedia.com/articles/investing/122215/spy-spdr-sp-500-trust-etf.asp) such as `SPY`,  which tracks the [Standard & Poor's 500 Index](https://www.investopedia.com/terms/s/sp500.asp).
 
-Ticker symbols for stocks e.g., `AAPL` or `MSFT` are relatively easy to find and understand. However, ticker symbols for crypto, forex, and in paricular options, are much more complicated. For now let's use the well known ticker symbols `SPY` to demonstrate [the Aggregates endpoint on Polygon.io](https://polygon.io/docs/stocks/get_v2_aggs_ticker__stocksticker__range__multiplier___timespan___from___to). However, [Polygon.io](https://polygon.io) has a collection of [reference data endpints](https://polygon.io/docs/stocks/get_v3_reference_tickers) for querying information about ticker symbols that we'll demonstrate below. 
+Ticker symbols for stocks e.g., `AAPL` or `MSFT` are relatively easy to find and understand. However, ticker symbols for crypto, forex, and in particular options, are more complicated. For now, let's use the well-known ticker symbols `SPY` to demonstrate [the Aggregates endpoint on Polygon.io](https://polygon.io/docs/stocks/get_v2_aggs_ticker__stocksticker__range__multiplier___timespan___from___to) for a stock. 
+
+However, [Polygon.io](https://polygon.io) has a collection of [reference data endpints](https://polygon.io/docs/stocks/get_v3_reference_tickers) for querying information about ticker symbols that we'll demonstrate below. 
 """
 
 # ╔═╡ e4d1c872-5b50-4f7d-aa2e-044c8aef2040
@@ -159,7 +202,7 @@ begin
 	# create the URL string for this endpoint -
 	my_stock_url_string = url(POLYGON_URL_STRING, stock_endpoint_model);
 
-	# make the api call -
+	# make the API call -
 	(h_stock, df_stock) = api(PolygonAggregatesEndpointModel, my_stock_url_string);
 
 	# show -
@@ -235,6 +278,9 @@ begin
 	nothing
 end
 
+# ╔═╡ 2592fa9a-4194-4206-ac8b-e9727d63b550
+TableOfContents(title="📚 Table of Contents", indent=true, depth=5, aside=true)
+
 # ╔═╡ 95e08b94-ba07-47e5-8982-8719d1af8877
 html"""
 <style>
@@ -301,10 +347,12 @@ PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
 PQPolygonSDK = "a9381516-e38f-4c81-935c-32707fb4df4c"
+PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 TOML = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
 
 [compat]
 PQPolygonSDK = "~0.1.3"
+PlutoUI = "~0.7.30"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -313,6 +361,12 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.7.1"
 manifest_format = "2.0"
+
+[[deps.AbstractPlutoDingetjes]]
+deps = ["Pkg"]
+git-tree-sha1 = "8eaf9f1b4921132a4cff3f36a1d9ba923b14a481"
+uuid = "6e696c72-6542-2067-7265-42206c756150"
+version = "1.1.4"
 
 [[deps.ArgTools]]
 uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
@@ -334,6 +388,12 @@ deps = ["TranscodingStreams", "Zlib_jll"]
 git-tree-sha1 = "ded953804d019afa9a3f98981d99b33e3db7b6da"
 uuid = "944b1d66-785c-5afd-91f1-9de20f533193"
 version = "0.7.0"
+
+[[deps.ColorTypes]]
+deps = ["FixedPointNumbers", "Random"]
+git-tree-sha1 = "024fe24d83e4a5bf5fc80501a314ce0d1aa35597"
+uuid = "3da002f7-5984-5a60-b8a6-cbb66c0b333f"
+version = "0.11.0"
 
 [[deps.Compat]]
 deps = ["Base64", "Dates", "DelimitedFiles", "Distributed", "InteractiveUtils", "LibGit2", "Libdl", "LinearAlgebra", "Markdown", "Mmap", "Pkg", "Printf", "REPL", "Random", "SHA", "Serialization", "SharedArrays", "Sockets", "SparseArrays", "Statistics", "Test", "UUIDs", "Unicode"]
@@ -394,6 +454,12 @@ git-tree-sha1 = "04d13bfa8ef11720c24e4d840c0033d145537df7"
 uuid = "48062228-2e41-5def-b9a4-89aafe57970f"
 version = "0.9.17"
 
+[[deps.FixedPointNumbers]]
+deps = ["Statistics"]
+git-tree-sha1 = "335bfdceacc84c5cdf16aadc768aa5ddfc5383cc"
+uuid = "53c48c17-4a7d-5ca2-90c5-79b7896eea93"
+version = "0.8.4"
+
 [[deps.Formatting]]
 deps = ["Printf"]
 git-tree-sha1 = "8339d61043228fdd3eb658d86c926cb282ae72a8"
@@ -409,6 +475,23 @@ deps = ["Base64", "Dates", "IniFile", "Logging", "MbedTLS", "NetworkOptions", "S
 git-tree-sha1 = "0fa77022fe4b511826b39c894c90daf5fce3334a"
 uuid = "cd3eb016-35fb-5094-929b-558a96fad6f3"
 version = "0.9.17"
+
+[[deps.Hyperscript]]
+deps = ["Test"]
+git-tree-sha1 = "8d511d5b81240fc8e6802386302675bdf47737b9"
+uuid = "47d2ed2b-36de-50cf-bf87-49c2cf4b8b91"
+version = "0.0.4"
+
+[[deps.HypertextLiteral]]
+git-tree-sha1 = "2b078b5a615c6c0396c77810d92ee8c6f470d238"
+uuid = "ac1192a8-f4b3-4bfe-ba22-af5b92cd3ab2"
+version = "0.9.3"
+
+[[deps.IOCapture]]
+deps = ["Logging", "Random"]
+git-tree-sha1 = "f7be53659ab06ddc986428d3a9dcc95f6fa6705a"
+uuid = "b5f81e59-6552-4d32-b1f0-c071b021bf89"
+version = "0.2.2"
 
 [[deps.IniFile]]
 deps = ["Test"]
@@ -521,6 +604,12 @@ version = "2.1.3"
 [[deps.Pkg]]
 deps = ["Artifacts", "Dates", "Downloads", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Serialization", "TOML", "Tar", "UUIDs", "p7zip_jll"]
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
+
+[[deps.PlutoUI]]
+deps = ["AbstractPlutoDingetjes", "Base64", "ColorTypes", "Dates", "Hyperscript", "HypertextLiteral", "IOCapture", "InteractiveUtils", "JSON", "Logging", "Markdown", "Random", "Reexport", "UUIDs"]
+git-tree-sha1 = "5c0eb9099596090bb3215260ceca687b888a1575"
+uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+version = "0.7.30"
 
 [[deps.PooledArrays]]
 deps = ["DataAPI", "Future"]
@@ -652,11 +741,14 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╔═╡ Cell order:
 # ╟─ee95e493-b7a6-43df-88c0-88ecf5028843
 # ╟─b0aa81e5-adcd-401e-bce8-ee63960378ce
+# ╟─66c5e100-ce9c-4387-a662-cd93cf76718b
+# ╟─672868d2-c09a-4230-8d90-a09d7af7ae8d
 # ╟─2c357a88-e6da-420f-bb50-0a7bcd824de3
 # ╠═f30a37ec-6d8c-11ec-1c66-89962478f84e
 # ╟─44891bab-deb2-4c55-8257-9d9ede10761c
-# ╠═08a4644d-46b8-48f3-a2ea-30a6474aa966
 # ╟─8ff5ac28-b6e6-42e4-b99d-2f26cda1e9be
+# ╟─041c79b9-d930-4706-a020-8fc2183ef78c
+# ╠═08a4644d-46b8-48f3-a2ea-30a6474aa966
 # ╟─fe7259dc-6d68-4561-b111-7b8eb62bef25
 # ╠═e4d1c872-5b50-4f7d-aa2e-044c8aef2040
 # ╟─dbc25db6-e592-4e7b-82aa-b7ea9dd7f1ee
@@ -665,6 +757,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═9368f7d5-48d2-445c-a55b-2fcc2bf21f8d
 # ╟─96166eaa-561b-4ef5-b2d4-f649f0f2dae2
 # ╠═e0a7bb44-20f7-40b1-9597-a6f0ec1162f0
+# ╠═2592fa9a-4194-4206-ac8b-e9727d63b550
 # ╠═95e08b94-ba07-47e5-8982-8719d1af8877
 # ╠═820238fb-a140-4f38-b58b-745df9b6cf5b
 # ╟─00000000-0000-0000-0000-000000000001
