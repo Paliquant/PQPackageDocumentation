@@ -409,8 +409,8 @@ begin
 
 	# create an options dictionary - holds data about the user (you)
 	user_model_options_dict = Dict{String,Any}()
-	user_model_options_dict["apikey"] = POLYGON_API_KEY
-	user_model_options_dict["email"] = POLYGON_API_EMAIL
+	user_model_options_dict["apikey"] = POLYGON_API_KEY 	# your API key goes here
+	user_model_options_dict["email"] = POLYGON_API_EMAIL 	# your API email goes here
 	
 	# create my user model -
 	my_user_model = model(PQPolygonSDKUserModel, user_model_options_dict);
@@ -958,7 +958,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─09c54c83-57de-4df0-9212-823cdd6507e0
 # ╟─2592fa9a-4194-4206-ac8b-e9727d63b550
 # ╟─95e08b94-ba07-47e5-8982-8719d1af8877
-# ╠═820238fb-a140-4f38-b58b-745df9b6cf5b
+# ╟─820238fb-a140-4f38-b58b-745df9b6cf5b
 # ╟─5d57883d-c34a-4e5f-9106-b6cad4050a66
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
