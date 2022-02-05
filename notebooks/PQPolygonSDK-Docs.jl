@@ -26,16 +26,16 @@ md"""
 md"""
 ### Introduction
 
-Data is the key to making great decisions, and this is especially true in the finance world. [Polygon.io](https://polygon.io) is a financial data warehouse that has an application programming interface (API) which you can use to access all kinds of financial data and other information. The `PQPolygonSDK.jl` package is a software development kit (SDK) written in the [Julia programing language](https://julialang.org) for the [Polygon.io](https://polygon.io) application programming interface.
+Data is the key to making great decisions, especially in finance. [Polygon.io](https://polygon.io) is a financial data warehouse with an application programming interface (API) that you can use to access all kinds of financial data and other information. The `PQPolygonSDK.jl` package is a software development kit (SDK) written in the [Julia programing language](https://julialang.org) for the [Polygon.io](https://polygon.io) application programming interface.
 
 [Polygon.io](https://polygon.io) was founded by former Googlers in 2016. Since September of 2020, [Polygon.io](https://polygon.io) has provided both [free and paid access](https://polygon.io/pricing) to current and historical [stock](https://polygon.io/docs/stocks/getting-started), [option](https://polygon.io/docs/options/getting-started), [crypto](https://polygon.io/docs/crypto/getting-started) and [forex](https://polygon.io/docs/forex/getting-started) data.  
 Check out the [Polygon.io blog](https://polygon.io/blog/) for the latest updates and developments from [Polygon.io](https://polygon.io).
 
-In this notebook, we'll discuss how to use the `PQPolygonSDK.jl` package to query the [Polygon.io REST API](https://polygon.io/docs/stocks). In particular, we'll:
+This notebook will discuss how to use the `PQPolygonSDK.jl` package to query the [Polygon.io REST API](https://polygon.io/docs/stocks). In particular, we'll:
 
 * Download and analyze daily stock price data for an arbitrary ticker symbol and a specified date range
 * Download and analyze crypto data for an arbitrary ticker and a specified date range
-* Download information about a stock ticker e.g., Apple (AAPL) and Microsoft (MSFT)
+* Download information about a stock ticker, e.g., Apple (AAPL) and Microsoft (MSFT)
 """
 
 # ╔═╡ fdc9fa10-4ac0-4055-ae8a-db3f16f2ae36
@@ -82,7 +82,7 @@ julia> using PQPolygonSDK
 
 # ╔═╡ 44891bab-deb2-4c55-8257-9d9ede10761c
 md"""
-### Overview of a Polygon API call using the PQPolygonSDK package
+### Overview of a Polygon API call using PQPolygonSDK
 
 There are four steps required to make a Polygon.io API call using the `PQPolygonSDK.jl` package:
 
@@ -100,7 +100,7 @@ model(userModelType::Type{PQPolygonSDKUserModel},
     options::Dict{String,Any}) -> PQPolygonSDKUserModel
 ```
     
-where the `options` dictionary holds `email` and `apikey` key-value pairs. 
+where `options` dictionary holds `email` and `apikey` key-value pairs. 
 
 ##### Build an endpoint model
 The `PQPolygonSDKUserModel` object can then be passed as an argument to a `model` function:
@@ -146,11 +146,11 @@ The `api` method returns two pieces of data, a header dictionary holding technic
 
 # ╔═╡ 8ff5ac28-b6e6-42e4-b99d-2f26cda1e9be
 md"""
-### Aggregates Endpoint: Download Stock, Cryptocurreny and Forex Price Data
+### Aggregates Endpoint
 
-[The Aggregates endpoint on Polygon.io](https://polygon.io/docs/stocks/get_v2_aggs_ticker__stocksticker__range__multiplier___timespan___from___to) can be used to access the Open/High/Low/Close (OHLC) price (along with other data like volume, and volume-weighted average price or vwap) at different time resolutions ranging from minutes to yearly for stocks, options, cryptocurrencies and foreign exchange (forex). In this section, let's look at examples for stocks, cryptocurrencies, and forex. We'll save options for a later time.
+[The Aggregates endpoint on Polygon.io](https://polygon.io/docs/stocks/get_v2_aggs_ticker__stocksticker__range__multiplier___timespan___from___to) can be used to access the Open/High/Low/Close (OHLC) price (along with other data like volume and volume-weighted average price or vwap) at different time resolutions ranging from minutes to yearly for stocks, options, cryptocurrencies and foreign exchange (forex). In this section, let's look at examples for stocks, cryptocurrencies, and forex. We'll save options for a later time.
 
-In each of these cases, a `PolygonAggregatesEndpointModel` is constructed using the `model` function:
+A `PolygonAggregatesEndpointModel` is constructed using the `model` function:
 
 ```julia
 model(apiModelType::Type{T}, userModel::PQPolygonSDKUserModel, 
@@ -158,7 +158,7 @@ model(apiModelType::Type{T}, userModel::PQPolygonSDKUserModel,
 			where T<:AbstractPolygonEndpointModel
 ```
 
-where the `options` dictionary holds the data for the API call as `key => value` pairs. See the [Aggregates endpoint documentation](https://polygon.io/docs/stocks/get_v2_aggs_ticker__stocksticker__range__multiplier___timespan___from___to) for the data that must be included.  Lastly, we use the `PolygonAggregatesEndpointModel` for stocks, crypto, forex, and options, where the ticker symbol convention for each type of asset is the only difference.  
+where the `options` dictionary holds the data for the API call as `key => value` pairs, see the [Aggregates endpoint documentation](https://polygon.io/docs/stocks/get_v2_aggs_ticker__stocksticker__range__multiplier___timespan___from___to) for the data that must be included.  Lastly, we use the `PolygonAggregatesEndpointModel` for stocks, crypto, forex, and options, where the ticker symbol convention for each type of asset is the only difference.  
 
 """
 
@@ -185,7 +185,7 @@ where the `options` dictionary holds the data for the API call as `key => value`
 
 # ╔═╡ 041c79b9-d930-4706-a020-8fc2183ef78c
 md"""
-##### Code to build a user model
+##### Example: build a user model
 """
 
 # ╔═╡ fe7259dc-6d68-4561-b111-7b8eb62bef25
@@ -195,7 +195,7 @@ md"""
 Ticker symbols are unique alphabetical codes that represent a company, e.g., `AAPL` (Apple) or an 
 [exchange traded fund (ETF)](https://www.investopedia.com/articles/investing/122215/spy-spdr-sp-500-trust-etf.asp) such as `SPY`,  which tracks the [Standard & Poor's 500 Index](https://www.investopedia.com/terms/s/sp500.asp).
 
-Ticker symbols for stocks e.g., `AAPL` or `MSFT` are relatively easy to find and understand. However, ticker symbols for crypto, forex, and in particular options, are more complicated. For now, let's use the well-known ticker symbols `SPY` to demonstrate [the Aggregates endpoint on Polygon.io](https://polygon.io/docs/stocks/get_v2_aggs_ticker__stocksticker__range__multiplier___timespan___from___to) for a stock. 
+Ticker symbols for stocks, e.g., `AAPL` or `MSFT`, are relatively easy to find and understand. However, ticker symbols for crypto, forex, and options, are more complicated. For now, let's use the well-known ticker symbol `SPY` to demonstrate [the Aggregates endpoint on Polygon.io](https://polygon.io/docs/stocks/get_v2_aggs_ticker__stocksticker__range__multiplier___timespan___from___to). 
 
 However, [Polygon.io](https://polygon.io) has a collection of [reference data endpints](https://polygon.io/docs/stocks/get_v3_reference_tickers) for querying information about ticker symbols that we'll demonstrate below. 
 """
@@ -213,7 +213,33 @@ would typcially use United States Dollars `USD`, but in the Eurozone, the measur
 
 # ╔═╡ 96166eaa-561b-4ef5-b2d4-f649f0f2dae2
 md"""
-### Download information about a particular asset ticker symbol
+### Download asset ticker symbol information 
+"""
+
+# ╔═╡ 66cdf38e-3c83-4b73-b383-6a5a2f9006d5
+
+
+# ╔═╡ 08a5bf4e-e014-47ae-a947-cdd0abf44597
+
+
+# ╔═╡ 14d185e3-162d-4570-98c6-454779005f4b
+
+
+# ╔═╡ 282be644-c196-4fce-83fa-8483141e8671
+
+
+# ╔═╡ 37e4cbfd-e4a4-4455-9756-7b086088ff28
+
+
+# ╔═╡ 09c54c83-57de-4df0-9212-823cdd6507e0
+md"""
+### Summary and Conclusions
+In this notebook, we covered some of the `PQPolygonSDK.jl` package features. `PQPolygonSDK.jl` is a software development kit (SDK) written in the [Julia programing language](https://julialang.org) for the [Polygon.io](https://polygon.io) application programming interface. 
+
+* Design paradigm used to model [Polygon.io](https://polygon.io) api calls: `user model` $\rightarrow$ `endpoint model` $\rightarrow$ `api call`. The `PQPolygonSDK.jl` package
+* Additional `endpoint models` are under development
+* Data is returned from the methods as a `DataFrame`
+* Metadata about an `api call` (including error messages) is returned as a `Dict` 
 """
 
 # ╔═╡ 2592fa9a-4194-4206-ac8b-e9727d63b550
@@ -349,6 +375,12 @@ begin
 	nothing;
 end
 
+# ╔═╡ a42d8dc9-489f-408a-b546-5437b425bfc4
+h_stock
+
+# ╔═╡ 2dd6f756-9b3f-4d35-a6d8-d82b0c878b5d
+df_stock
+
 # ╔═╡ 516589ec-3f40-4870-9a37-8e030cf1c951
 begin
 
@@ -389,7 +421,7 @@ begin
 
 	# now that we have the user_model, let's build an endpoint model -
 	ticker_data_endpoint_options = Dict{String,Any}()
-	ticker_data_endpoint_options["ticker"] = "AAPL"
+	ticker_data_endpoint_options["ticker"] = "ALLY"
 	ticker_data_endpoint_model = model(PolygonTickerDetailsEndpointModel, my_user_model, 
 		ticker_data_endpoint_options);
 
@@ -397,11 +429,18 @@ begin
 	my_ticker_data_url_string = url(POLYGON_URL_STRING, ticker_data_endpoint_model)
 
 	# make the call -
-	(h_ticker_data, df_ticker_data) = api(PolygonTickerDetailsEndpointModel, my_ticker_data_url_string)
+	(h_ticker_data, df_ticker_data) = api(PolygonTickerDetailsEndpointModel, 
+		my_ticker_data_url_string)
 
 	# show -
 	nothing
 end
+
+# ╔═╡ f2cb0de2-c988-4823-b996-6007a3ea84c2
+df_ticker_data
+
+# ╔═╡ 6148a553-cf0f-4c5b-9942-b567127513c4
+PlutoUI.Resource(df_ticker_data[!,:logo][1])
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -801,7 +840,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 
 # ╔═╡ Cell order:
 # ╟─ee95e493-b7a6-43df-88c0-88ecf5028843
-# ╟─b0aa81e5-adcd-401e-bce8-ee63960378ce
+# ╠═b0aa81e5-adcd-401e-bce8-ee63960378ce
 # ╟─fdc9fa10-4ac0-4055-ae8a-db3f16f2ae36
 # ╟─66c5e100-ce9c-4387-a662-cd93cf76718b
 # ╟─672868d2-c09a-4230-8d90-a09d7af7ae8d
@@ -812,7 +851,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─106d8bd6-beaf-4552-8a1c-e0536137ad43
 # ╟─7fcd9ada-dd7c-4a02-9f12-b998ea9df3ad
 # ╟─9c38031a-7a57-45ce-baa7-c13df489a3d8
-# ╟─44891bab-deb2-4c55-8257-9d9ede10761c
+# ╠═44891bab-deb2-4c55-8257-9d9ede10761c
 # ╟─40db3a68-cd4e-45df-89a0-f9f1eb8d7227
 # ╟─96fde2cf-c457-4f40-a8d3-1351a02abf49
 # ╟─f5398c1d-4f6f-4d10-8410-0ed9db82ae74
@@ -829,15 +868,25 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═08a4644d-46b8-48f3-a2ea-30a6474aa966
 # ╟─fe7259dc-6d68-4561-b111-7b8eb62bef25
 # ╠═e4d1c872-5b50-4f7d-aa2e-044c8aef2040
+# ╠═a42d8dc9-489f-408a-b546-5437b425bfc4
+# ╠═2dd6f756-9b3f-4d35-a6d8-d82b0c878b5d
 # ╟─dbc25db6-e592-4e7b-82aa-b7ea9dd7f1ee
 # ╠═516589ec-3f40-4870-9a37-8e030cf1c951
 # ╠═6617f059-c2ad-461e-8e83-73c85441ab5d
 # ╠═9368f7d5-48d2-445c-a55b-2fcc2bf21f8d
 # ╟─96166eaa-561b-4ef5-b2d4-f649f0f2dae2
 # ╠═e0a7bb44-20f7-40b1-9597-a6f0ec1162f0
+# ╠═f2cb0de2-c988-4823-b996-6007a3ea84c2
+# ╠═6148a553-cf0f-4c5b-9942-b567127513c4
+# ╟─66cdf38e-3c83-4b73-b383-6a5a2f9006d5
+# ╟─08a5bf4e-e014-47ae-a947-cdd0abf44597
+# ╟─14d185e3-162d-4570-98c6-454779005f4b
+# ╟─282be644-c196-4fce-83fa-8483141e8671
+# ╟─37e4cbfd-e4a4-4455-9756-7b086088ff28
+# ╟─09c54c83-57de-4df0-9212-823cdd6507e0
 # ╟─2592fa9a-4194-4206-ac8b-e9727d63b550
-# ╠═95e08b94-ba07-47e5-8982-8719d1af8877
-# ╠═820238fb-a140-4f38-b58b-745df9b6cf5b
-# ╠═5d57883d-c34a-4e5f-9106-b6cad4050a66
+# ╟─95e08b94-ba07-47e5-8982-8719d1af8877
+# ╟─820238fb-a140-4f38-b58b-745df9b6cf5b
+# ╟─5d57883d-c34a-4e5f-9106-b6cad4050a66
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
