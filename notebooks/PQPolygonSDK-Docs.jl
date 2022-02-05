@@ -191,6 +191,12 @@ Ticker symbols for stocks, e.g., `AAPL` or `MSFT`, are relatively easy to find a
 However, [Polygon.io](https://polygon.io) has a collection of [reference data endpints](https://polygon.io/docs/stocks/get_v3_reference_tickers) for querying information about ticker symbols that we'll demonstrate below. 
 """
 
+# ╔═╡ a42d8dc9-489f-408a-b546-5437b425bfc4
+#h_stock
+
+# ╔═╡ 2dd6f756-9b3f-4d35-a6d8-d82b0c878b5d
+# df_stock
+
 # ╔═╡ dbc25db6-e592-4e7b-82aa-b7ea9dd7f1ee
 md"""
 ##### Download Crypto data
@@ -201,6 +207,12 @@ In the United States, we
 would typically use United States Dollars `USD`, but in the Eurozone, the measurement currency would be in € or `EUR`. For example, for [bitcoin](https://bitcoin.org/) demarcated United States Dollars (USD), the [Polygon.io](https://polygon.io) ticker is given by: `X:BTCUSD`, while the [bitcoin](https://bitcoin.org/) ticker symbol demarcated in € would be: `X:BTCEUR`.
 
 """
+
+# ╔═╡ 6617f059-c2ad-461e-8e83-73c85441ab5d
+# h_crypto 
+
+# ╔═╡ 9368f7d5-48d2-445c-a55b-2fcc2bf21f8d
+# df_crypto
 
 # ╔═╡ eb846a5e-d78c-4208-a828-6591a2b96007
 
@@ -223,6 +235,21 @@ would typically use United States Dollars `USD`, but in the Eurozone, the measur
 # ╔═╡ 1d13c045-2812-4bcd-8fda-5ac28f807497
 
 
+# ╔═╡ 263dfd23-fa6a-41a5-a701-1910e7623453
+
+
+# ╔═╡ 63b64f5b-793b-4ba1-9df0-ebab53fa1d31
+
+
+# ╔═╡ 617ce76c-d5f2-4fd9-89c3-eef216285f81
+
+
+# ╔═╡ 71316dc9-bf47-4e03-9330-b94139e765c1
+
+
+# ╔═╡ 076b8e58-e54d-4bca-81db-bdb8bb34c41a
+
+
 # ╔═╡ 96166eaa-561b-4ef5-b2d4-f649f0f2dae2
 md"""
 ### Ticker Details Endpoint
@@ -233,6 +260,16 @@ The `PolygonTickerDetailsEndpointModel` model can be used to download details fo
 md"""
 ##### Ticker details for AAPL
 """
+
+# ╔═╡ bd00cfb0-8dae-4ae9-a8f4-2038ed1f4882
+# h_ticker_data
+
+# ╔═╡ 2de55011-527d-4a4a-836c-26e8a0803015
+# df_ticker_data
+
+# ╔═╡ 7a8df8f8-a7e1-43e3-a054-57ead5299835
+# download logo -
+# PlutoUI.Resource(df_ticker_data[!,:logo][1])
 
 # ╔═╡ 08a5bf4e-e014-47ae-a947-cdd0abf44597
 
@@ -411,12 +448,6 @@ begin
 	nothing;
 end
 
-# ╔═╡ a42d8dc9-489f-408a-b546-5437b425bfc4
-h_stock
-
-# ╔═╡ 2dd6f756-9b3f-4d35-a6d8-d82b0c878b5d
-df_stock
-
 # ╔═╡ 516589ec-3f40-4870-9a37-8e030cf1c951
 begin
 
@@ -445,12 +476,6 @@ begin
 	# show -
 	nothing;
 end
-
-# ╔═╡ 6617f059-c2ad-461e-8e83-73c85441ab5d
-h_crypto
-
-# ╔═╡ 9368f7d5-48d2-445c-a55b-2fcc2bf21f8d
-df_crypto
 
 # ╔═╡ e0a7bb44-20f7-40b1-9597-a6f0ec1162f0
 begin
@@ -893,7 +918,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─8ff5ac28-b6e6-42e4-b99d-2f26cda1e9be
 # ╟─041c79b9-d930-4706-a020-8fc2183ef78c
 # ╠═08a4644d-46b8-48f3-a2ea-30a6474aa966
-# ╠═fe7259dc-6d68-4561-b111-7b8eb62bef25
+# ╟─fe7259dc-6d68-4561-b111-7b8eb62bef25
 # ╠═e4d1c872-5b50-4f7d-aa2e-044c8aef2040
 # ╠═a42d8dc9-489f-408a-b546-5437b425bfc4
 # ╠═2dd6f756-9b3f-4d35-a6d8-d82b0c878b5d
@@ -908,9 +933,17 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─d1980d23-9c08-46c2-a49a-d761ff0e8866
 # ╟─52bfdb59-4b1a-4314-be86-b1b1a4ba60b2
 # ╟─1d13c045-2812-4bcd-8fda-5ac28f807497
+# ╟─263dfd23-fa6a-41a5-a701-1910e7623453
+# ╟─63b64f5b-793b-4ba1-9df0-ebab53fa1d31
+# ╟─617ce76c-d5f2-4fd9-89c3-eef216285f81
+# ╟─71316dc9-bf47-4e03-9330-b94139e765c1
+# ╟─076b8e58-e54d-4bca-81db-bdb8bb34c41a
 # ╟─96166eaa-561b-4ef5-b2d4-f649f0f2dae2
 # ╟─e86aa566-7c17-46c9-bb22-b135f6e5892f
 # ╠═e0a7bb44-20f7-40b1-9597-a6f0ec1162f0
+# ╠═bd00cfb0-8dae-4ae9-a8f4-2038ed1f4882
+# ╠═2de55011-527d-4a4a-836c-26e8a0803015
+# ╠═7a8df8f8-a7e1-43e3-a054-57ead5299835
 # ╟─08a5bf4e-e014-47ae-a947-cdd0abf44597
 # ╟─14d185e3-162d-4570-98c6-454779005f4b
 # ╟─282be644-c196-4fce-83fa-8483141e8671
