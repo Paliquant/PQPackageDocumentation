@@ -144,6 +144,18 @@ The `api` method returns two pieces of data, a header dictionary holding technic
 # ╔═╡ f650a3ae-56a3-4807-8e99-2a7d1693bff0
 
 
+# ╔═╡ fc1cad78-b63e-445e-9cb1-5c4eb9f2fd89
+
+
+# ╔═╡ 3c09ecd0-2a71-4f29-b8fc-69ab20bfaf93
+
+
+# ╔═╡ 2a58e169-67fa-4222-b33b-17dc18eee230
+
+
+# ╔═╡ bc73c133-eb6a-462c-90e9-497dfed184f9
+
+
 # ╔═╡ 8ff5ac28-b6e6-42e4-b99d-2f26cda1e9be
 md"""
 ### Aggregates Endpoint
@@ -192,7 +204,7 @@ would typcially use United States Dollars `USD`, but in the Eurozone, the measur
 
 # ╔═╡ 96166eaa-561b-4ef5-b2d4-f649f0f2dae2
 md"""
-### Download asset ticker symbol information 
+### Ticker Details Endpoint 
 """
 
 # ╔═╡ 66cdf38e-3c83-4b73-b383-6a5a2f9006d5
@@ -835,6 +847,10 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─96fde2cf-c457-4f40-a8d3-1351a02abf49
 # ╟─f5398c1d-4f6f-4d10-8410-0ed9db82ae74
 # ╟─f650a3ae-56a3-4807-8e99-2a7d1693bff0
+# ╟─fc1cad78-b63e-445e-9cb1-5c4eb9f2fd89
+# ╟─3c09ecd0-2a71-4f29-b8fc-69ab20bfaf93
+# ╟─2a58e169-67fa-4222-b33b-17dc18eee230
+# ╟─bc73c133-eb6a-462c-90e9-497dfed184f9
 # ╟─8ff5ac28-b6e6-42e4-b99d-2f26cda1e9be
 # ╟─041c79b9-d930-4706-a020-8fc2183ef78c
 # ╠═08a4644d-46b8-48f3-a2ea-30a6474aa966
