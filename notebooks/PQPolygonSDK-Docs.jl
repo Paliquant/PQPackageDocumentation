@@ -176,12 +176,12 @@ where the `options` dictionary holds the data for the API call as `key => value`
 
 # ╔═╡ 041c79b9-d930-4706-a020-8fc2183ef78c
 md"""
-##### Example: build a user model
+##### User model
 """
 
 # ╔═╡ fe7259dc-6d68-4561-b111-7b8eb62bef25
 md"""
-##### Download timestamped price data for a ticker symbol and date range
+##### Download Equity/ETF data
 
 Ticker symbols are unique alphabetical codes that represent a company, e.g., `AAPL` (Apple) or an 
 [exchange traded fund (ETF)](https://www.investopedia.com/articles/investing/122215/spy-spdr-sp-500-trust-etf.asp) such as `SPY`,  which tracks the [Standard & Poor's 500 Index](https://www.investopedia.com/terms/s/sp500.asp).
@@ -193,22 +193,46 @@ However, [Polygon.io](https://polygon.io) has a collection of [reference data en
 
 # ╔═╡ dbc25db6-e592-4e7b-82aa-b7ea9dd7f1ee
 md"""
-##### Download crypto data for an arbitrary cryptocurrency and date range
+##### Download Crypto data
 
-For cryptocurrencies, the [Polygon.io](https://polygon.io) convention for ticker symbols is `X:<cyrpto>XXX`, where `crypto` denotes the particular cryptocurrency and `XXX` denotes the currency you want to see the price of the cyrpto measured in. 
+For cryptocurrencies, the [Polygon.io](https://polygon.io) convention for ticker symbols is `X:<cyrpto>XXX`, where `crypto` denotes the particular cryptocurrency and `XXX` denotes the currency you want to see the price of the crypto measured in. 
 
 In the United States, we 
-would typcially use United States Dollars `USD`, but in the Eurozone, the measurement currency would be in € or `EUR`. For example, for [bitcoin](https://bitcoin.org/) demarcated United States Dollars (USD), the [Polygon.io](https://polygon.io) ticker is given by: `X:BTCUSD`, while the [bitcoin](https://bitcoin.org/) ticker symbol demarcated in € would be: `X:BTCEUR`.
+would typically use United States Dollars `USD`, but in the Eurozone, the measurement currency would be in € or `EUR`. For example, for [bitcoin](https://bitcoin.org/) demarcated United States Dollars (USD), the [Polygon.io](https://polygon.io) ticker is given by: `X:BTCUSD`, while the [bitcoin](https://bitcoin.org/) ticker symbol demarcated in € would be: `X:BTCEUR`.
 
 """
+
+# ╔═╡ eb846a5e-d78c-4208-a828-6591a2b96007
+
+
+# ╔═╡ 236f21a7-aaa8-46ef-ae11-fb8c86d6872c
+
+
+# ╔═╡ 374ab839-0ce6-47f4-97ca-cb345fd4493c
+
+
+# ╔═╡ 590b11f9-97b3-4e6a-99eb-3cee1542a204
+
+
+# ╔═╡ d1980d23-9c08-46c2-a49a-d761ff0e8866
+
+
+# ╔═╡ 52bfdb59-4b1a-4314-be86-b1b1a4ba60b2
+
+
+# ╔═╡ 1d13c045-2812-4bcd-8fda-5ac28f807497
+
 
 # ╔═╡ 96166eaa-561b-4ef5-b2d4-f649f0f2dae2
 md"""
-### Ticker Details Endpoint 
+### Ticker Details Endpoint
+The `PolygonTickerDetailsEndpointModel` model can be used to download details for a ticker symbol's company. This endpoint provides a general overview of the entity with information such as name, sector, exchange, logo, and similar companies.
 """
 
-# ╔═╡ 66cdf38e-3c83-4b73-b383-6a5a2f9006d5
-
+# ╔═╡ e86aa566-7c17-46c9-bb22-b135f6e5892f
+md"""
+##### Ticker details for AAPL
+"""
 
 # ╔═╡ 08a5bf4e-e014-47ae-a947-cdd0abf44597
 
@@ -220,6 +244,27 @@ md"""
 
 
 # ╔═╡ 37e4cbfd-e4a4-4455-9756-7b086088ff28
+
+
+# ╔═╡ 15f2fddb-01ab-45ce-a4d6-7c134fd6022e
+
+
+# ╔═╡ eb14de30-9c5c-4887-9e72-e552a97eb232
+
+
+# ╔═╡ 5444a0ea-1968-44de-a94e-50fca7f96bb9
+
+
+# ╔═╡ 0c78d113-2b63-4bee-93fe-4061a0834898
+
+
+# ╔═╡ 1e12c204-be9d-4222-b2b9-c38a6bd615cb
+
+
+# ╔═╡ 52fd0a3b-d676-4b7d-bafe-bc4bdff4f3b1
+
+
+# ╔═╡ 5edcd3be-6993-4085-8219-9b7d02ddc4d8
 
 
 # ╔═╡ 09c54c83-57de-4df0-9212-823cdd6507e0
@@ -412,7 +457,7 @@ begin
 
 	# now that we have the user_model, let's build an endpoint model -
 	ticker_data_endpoint_options = Dict{String,Any}()
-	ticker_data_endpoint_options["ticker"] = "ALLY"
+	ticker_data_endpoint_options["ticker"] = "AAPL"
 	ticker_data_endpoint_model = model(PolygonTickerDetailsEndpointModel, my_user_model, 
 		ticker_data_endpoint_options);
 
@@ -426,12 +471,6 @@ begin
 	# show -
 	nothing
 end
-
-# ╔═╡ f2cb0de2-c988-4823-b996-6007a3ea84c2
-df_ticker_data
-
-# ╔═╡ 6148a553-cf0f-4c5b-9942-b567127513c4
-PlutoUI.Resource(df_ticker_data[!,:logo][1])
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -854,7 +893,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─8ff5ac28-b6e6-42e4-b99d-2f26cda1e9be
 # ╟─041c79b9-d930-4706-a020-8fc2183ef78c
 # ╠═08a4644d-46b8-48f3-a2ea-30a6474aa966
-# ╟─fe7259dc-6d68-4561-b111-7b8eb62bef25
+# ╠═fe7259dc-6d68-4561-b111-7b8eb62bef25
 # ╠═e4d1c872-5b50-4f7d-aa2e-044c8aef2040
 # ╠═a42d8dc9-489f-408a-b546-5437b425bfc4
 # ╠═2dd6f756-9b3f-4d35-a6d8-d82b0c878b5d
@@ -862,19 +901,31 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═516589ec-3f40-4870-9a37-8e030cf1c951
 # ╠═6617f059-c2ad-461e-8e83-73c85441ab5d
 # ╠═9368f7d5-48d2-445c-a55b-2fcc2bf21f8d
+# ╟─eb846a5e-d78c-4208-a828-6591a2b96007
+# ╟─236f21a7-aaa8-46ef-ae11-fb8c86d6872c
+# ╟─374ab839-0ce6-47f4-97ca-cb345fd4493c
+# ╟─590b11f9-97b3-4e6a-99eb-3cee1542a204
+# ╟─d1980d23-9c08-46c2-a49a-d761ff0e8866
+# ╟─52bfdb59-4b1a-4314-be86-b1b1a4ba60b2
+# ╟─1d13c045-2812-4bcd-8fda-5ac28f807497
 # ╟─96166eaa-561b-4ef5-b2d4-f649f0f2dae2
+# ╟─e86aa566-7c17-46c9-bb22-b135f6e5892f
 # ╠═e0a7bb44-20f7-40b1-9597-a6f0ec1162f0
-# ╠═f2cb0de2-c988-4823-b996-6007a3ea84c2
-# ╠═6148a553-cf0f-4c5b-9942-b567127513c4
-# ╟─66cdf38e-3c83-4b73-b383-6a5a2f9006d5
 # ╟─08a5bf4e-e014-47ae-a947-cdd0abf44597
 # ╟─14d185e3-162d-4570-98c6-454779005f4b
 # ╟─282be644-c196-4fce-83fa-8483141e8671
 # ╟─37e4cbfd-e4a4-4455-9756-7b086088ff28
+# ╟─15f2fddb-01ab-45ce-a4d6-7c134fd6022e
+# ╟─eb14de30-9c5c-4887-9e72-e552a97eb232
+# ╟─5444a0ea-1968-44de-a94e-50fca7f96bb9
+# ╟─0c78d113-2b63-4bee-93fe-4061a0834898
+# ╟─1e12c204-be9d-4222-b2b9-c38a6bd615cb
+# ╟─52fd0a3b-d676-4b7d-bafe-bc4bdff4f3b1
+# ╟─5edcd3be-6993-4085-8219-9b7d02ddc4d8
 # ╟─09c54c83-57de-4df0-9212-823cdd6507e0
 # ╟─2592fa9a-4194-4206-ac8b-e9727d63b550
 # ╟─95e08b94-ba07-47e5-8982-8719d1af8877
-# ╟─820238fb-a140-4f38-b58b-745df9b6cf5b
+# ╠═820238fb-a140-4f38-b58b-745df9b6cf5b
 # ╟─5d57883d-c34a-4e5f-9106-b6cad4050a66
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
