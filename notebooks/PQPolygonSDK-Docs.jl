@@ -162,27 +162,6 @@ where the `options` dictionary holds the data for the API call as `key => value`
 
 """
 
-# ╔═╡ 80f33d55-bfaf-4558-a638-6613b448d6ee
-
-
-# ╔═╡ 9c54bf05-9641-4505-8fbc-00d4a7ac468f
-
-
-# ╔═╡ 884954ce-1d0d-482a-be99-2748c343a622
-
-
-# ╔═╡ 30fc61a4-61f6-48aa-b947-65b7d6531a6f
-
-
-# ╔═╡ 68a6ab3b-6fe2-4551-9d47-2a80d92e4fc6
-
-
-# ╔═╡ ec916364-67aa-46f3-a656-0b3d44885492
-
-
-# ╔═╡ 31a69d2b-67cf-4109-8db8-23744e3d0098
-
-
 # ╔═╡ 041c79b9-d930-4706-a020-8fc2183ef78c
 md"""
 ##### Example: build a user model
@@ -840,7 +819,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 
 # ╔═╡ Cell order:
 # ╟─ee95e493-b7a6-43df-88c0-88ecf5028843
-# ╠═b0aa81e5-adcd-401e-bce8-ee63960378ce
+# ╟─b0aa81e5-adcd-401e-bce8-ee63960378ce
 # ╟─fdc9fa10-4ac0-4055-ae8a-db3f16f2ae36
 # ╟─66c5e100-ce9c-4387-a662-cd93cf76718b
 # ╟─672868d2-c09a-4230-8d90-a09d7af7ae8d
@@ -851,19 +830,12 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─106d8bd6-beaf-4552-8a1c-e0536137ad43
 # ╟─7fcd9ada-dd7c-4a02-9f12-b998ea9df3ad
 # ╟─9c38031a-7a57-45ce-baa7-c13df489a3d8
-# ╠═44891bab-deb2-4c55-8257-9d9ede10761c
+# ╟─44891bab-deb2-4c55-8257-9d9ede10761c
 # ╟─40db3a68-cd4e-45df-89a0-f9f1eb8d7227
 # ╟─96fde2cf-c457-4f40-a8d3-1351a02abf49
 # ╟─f5398c1d-4f6f-4d10-8410-0ed9db82ae74
 # ╟─f650a3ae-56a3-4807-8e99-2a7d1693bff0
 # ╟─8ff5ac28-b6e6-42e4-b99d-2f26cda1e9be
-# ╟─80f33d55-bfaf-4558-a638-6613b448d6ee
-# ╟─9c54bf05-9641-4505-8fbc-00d4a7ac468f
-# ╟─884954ce-1d0d-482a-be99-2748c343a622
-# ╟─30fc61a4-61f6-48aa-b947-65b7d6531a6f
-# ╟─68a6ab3b-6fe2-4551-9d47-2a80d92e4fc6
-# ╟─ec916364-67aa-46f3-a656-0b3d44885492
-# ╟─31a69d2b-67cf-4109-8db8-23744e3d0098
 # ╟─041c79b9-d930-4706-a020-8fc2183ef78c
 # ╠═08a4644d-46b8-48f3-a2ea-30a6474aa966
 # ╟─fe7259dc-6d68-4561-b111-7b8eb62bef25
